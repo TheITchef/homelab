@@ -13,3 +13,8 @@ Thumbs.db
 # Editor
 .vscode/
 *.swp
+
+.obsidian/workspace.json
+*.tmp
+*.log
+secrets/
