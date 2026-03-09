@@ -4,21 +4,23 @@
     "type": "split",
     "children": [
       {
-        "id": "ba73579a42d9ae24",
+        "id": "ccf1fa7012d73bc2",
         "type": "tabs",
         "children": [
           {
-            "id": "75f644b851d66b3d",
+            "id": "c0b539c0c101c17f",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "kanban",
               "state": {
-                "file": "Lab Inventory.md",
-                "mode": "source",
-                "source": false
+                "file": "kanban/KANBAN.md",
+                "kanbanViewState": {
+                  "kanban-plugin": "board",
+                  "list-collapse": []
+                }
               },
-              "icon": "lucide-file",
-              "title": "Lab Inventory"
+              "icon": "lucide-trello",
+              "title": "KANBAN"
             }
           }
         ]
@@ -180,13 +182,15 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "obsidian-kanban:Create new board": false
     }
   },
-  "active": "75f644b851d66b3d",
+  "active": "0a74f6f3e6c32f6e",
   "lastOpenFiles": [
-    "homelab-inventory-checklist.md",
+    "kanban/KANBAN.md",
     "Lab Inventory.md",
+    "homelab-inventory-checklist.md",
     "Untitled 1.md",
     "Welcome.md"
   ]
