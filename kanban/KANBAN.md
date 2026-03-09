@@ -1,13 +1,11 @@
 ---
-kanban-plugin: basic
----
+
+kanban-plugin: board
 
 ---
 
 ## 📥 Backlog
 
-- [ ] Cisco 891F initial configuration
-- [ ] Cisco 3560-CG VLAN configuration
 - [ ] D-Link OOB switch configuration
 - [ ] Physical rack build + cabling
 - [ ] Assign static OOB IPs (VLAN 10)
@@ -31,14 +29,20 @@ kanban-plugin: basic
 - [ ] PostgreSQL + Redis
 - [ ] Terraform + Ansible
 - [ ] Ollama local LLMs
+- [ ] Connect 891F to ISP via D-Link distribution
+- [ ] DC01 migration → VLAN 20 (10.0.20.2)
+- [ ] LinkedIn post #2 (Cisco/network setup)
+
 
 ## 🔄 In Progress
 
 - [ ] Cisco 891F initial configuration
 
+
 ## 🧪 Testing
 
 - [ ] Service account password policy verification
+
 
 ## ✅ Done
 
@@ -59,7 +63,14 @@ kanban-plugin: basic
 - [x] GitHub repo live
 - [x] LinkedIn post #1 published 🚀
 - [x] YubiKey ordered ✅
+- [ ] Cisco 891F initial configuration
+- [ ] Cisco 3560-CG VLAN configuration
+
+
+
 
 %% kanban:settings
-{"kanban-plugin":"basic"}
-%%i
+```
+{"kanban-plugin":"board"}
+```
+%%
