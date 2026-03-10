@@ -2,11 +2,12 @@
 kanban-plugin: board
 ---
 
-**Last updated:** 2026-03-10
+**Last updated:** 2026-03-10 (evening)
 
 ## 📥 Backlog
 
-- [ ] 3850-48P purchase decision (before Phase 2)
+- [ ] 🤔 FortiGate 60F — under consideration (SMB/mid-market DPI, ~€150 secondhand)
+- [ ] 🤔 3850-48P purchase decision (before Phase 2)
 - [ ] Configure D-Link DGS-1100-08V2 as OOB management switch (VLAN 10)
 - [ ] DC01 LAN2 → VLAN 10 (10.0.10.2), 3560-CG GE0/6
 - [ ] Check H710 BBU health on esxi-02
@@ -22,20 +23,21 @@ kanban-plugin: board
 - [ ] Order: Velcro cable ties
 - [ ] Order: Cable labels / label printer tape
 - [ ] Order: 1U shelf for D-Link OOB switch
-- [ ] Back up KeePass database to Google Drive
+- [ ] Phase 2 cabling: 305m Cat6 solid core box, 24-port keystone patch panel, keystone jacks ×30, punch-down tool, 0.3m patch cables ×20
 - [ ] LinkedIn post #2 — Cisco network setup
 - [ ] Azure tenant — verify Sweden Central region
 - [ ] SCCM/MECM trial (Phase 3 prep)
 
 ## 🔨 In Progress — Phase 1 Physical
 
-- [ ] Wednesday: collect YubiKeys + buy TP-Link TL-SG105 (5-port GbE)
-- [ ] YubiKey 5C NFC + YubiKey 5 NFC setup (MFA for admin accounts)
+- [ ] Wednesday: collect YubiKey 5C NFC (one lost — reorder backup later)
+- [ ] YubiKey setup when collected
 - [ ] Change all iDRAC/iLO default passwords
 - [ ] Physical rack build — mount all devices per rack layout plan
-- [ ] Run and dress all power + data cables
+- [ ] Run and dress all power + data cables (architecture frozen — revisit Phase 2)
 - [ ] Label both ends of every cable
 - [ ] esxi-01 — install ESXi 8 (currently running Cisco CML)
+- [ ] Temu order: blanking panels ×20, cable managers ×2, 1U shelf, velcro ties, cable labels
 
 ## ✅ Done
 
@@ -58,6 +60,11 @@ kanban-plugin: board
 - [x] T470s PAW connected to lab: GbE → 3560-CG GE0/5 (VLAN 20)
 - [x] RDP from T470s → DC01 working
 - [x] DNS persistence fixed on T470s (netplan → NetworkManager)
+- [x] Rack diagram created (docs/rack-diagram.html)
+- [x] Cisco 3850-48P-E ordered — 1055 SEK, renewtech.se (IP Services, 715W, rack mounts)
+- [x] Cabling architecture planned — Panduit grey internal, 10m external ×3
+- [x] Patch panel / keystone architecture frozen until Phase 2
+- [x] Firewall research completed — FortiGate 60F under consideration
 - [x] Running configs saved to GitHub (configs/cisco/)
 - [x] LinkedIn profile set up (TheITchef)
 - [x] LinkedIn post #1 published (lab intro)
