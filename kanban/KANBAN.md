@@ -30,14 +30,19 @@ kanban-plugin: board
 
 ## 🔨 In Progress — Phase 1 Physical
 
-- [ ] Wednesday: collect YubiKey 5C NFC (one lost — reorder backup later)
+- [ ] Wednesday: collect YubiKey 5C NFC (backup YubiKey 5 NFC — reorder later, not urgent)
 - [ ] YubiKey setup when collected
 - [ ] Change all iDRAC/iLO default passwords
 - [ ] Physical rack build — mount all devices per rack layout plan
 - [ ] Run and dress all power + data cables (architecture frozen — revisit Phase 2)
 - [ ] Label both ends of every cable
 - [ ] esxi-01 — install ESXi 8 (currently running Cisco CML)
-- [ ] Temu order: blanking panels ×20, cable managers ×2, 1U shelf, velcro ties, cable labels
+- [x] Temu ordered: blanking panels ×20 + cable managers ×2 ✅
+- [x] Amazon ordered: Digitus DN-93615 ×2 (48× Cat6A keystones + 2× patch panels) ✅
+- [ ] Order: 1U shelf ×1 (D-Link + TP-Link)
+- [ ] Order: patch cables — yellow ×4, blue ×6, orange ×4, purple ×4 (0.3m) + red ×2, white ×14 (0.5m) + spare ×5
+- [ ] Order: velcro cable ties ×1 pack
+- [ ] Order: cable labels / markers ×1 pack
 
 ## ✅ Done
 
