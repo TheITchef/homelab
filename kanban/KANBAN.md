@@ -2,7 +2,7 @@
 kanban-plugin: board
 ---
 
-**Last updated:** 2026-03-10 (evening)
+**Last updated:** 2026-03-10 (late evening)
 
 ## 📥 Backlog
 
@@ -13,7 +13,6 @@ kanban-plugin: board
 - [ ] k3s cluster on Proxmox (Phase 3 SRE)
 - [ ] Prometheus + Grafana + Alertmanager (Phase 3 SRE)
 - [ ] SCCM / MECM eval deployment on mgmt-01 (Phase 3 Microsoft)
-- [ ] 🤔 3850-48P purchase decision (before Phase 2)
 - [ ] Configure D-Link DGS-1100-08V2 as OOB management switch (VLAN 10)
 - [ ] DC01 LAN2 → VLAN 10 (10.0.10.2), 3560-CG GE0/6
 - [ ] Check H710 BBU health on esxi-02
@@ -38,7 +37,7 @@ kanban-plugin: board
 
 - [ ] Wednesday: collect YubiKey 5C NFC (backup YubiKey 5 NFC — reorder later, not urgent)
 - [ ] YubiKey setup when collected
-- [ ] Change all iDRAC/iLO default passwords
+- [x] Change all iDRAC/iLO default passwords ✅
 - [ ] Physical rack build — mount all devices per rack layout plan
 - [ ] Run and dress all power + data cables (architecture frozen — revisit Phase 2)
 - [ ] Label both ends of every cable
@@ -70,7 +69,10 @@ kanban-plugin: board
 - [x] DC01 migrated from home LAN (192.168.0.50) → lab VLAN 20 (10.0.20.2)
 - [x] T470s PAW connected to lab: GbE → 3560-CG GE0/5 (VLAN 20)
 - [x] RDP from T470s → DC01 working
-- [x] esxi-02 iDRAC hardened — password changed, static IP 10.0.10.4, hostname itc-uvy-idrac-esxi-02, root disabled ✅
+- [x] esxi-01 iDRAC hardened — 10.0.10.3, itc-uvy-idrac-esxi-01, itchef-admin, root disabled ✅
+- [x] esxi-02 iDRAC hardened — 10.0.10.4, itc-uvy-idrac-esxi-02, itchef-admin, root disabled ✅
+- [x] mgmt-01 iLO4 hardened — 10.0.10.5, itc-uvy-ilo-mgmt-01, itchef-admin, Administrator secured ✅
+- [x] DC01 iDRAC Basic — 10.0.10.6, LAN2, no web UI (Basic licence), KVM only ⚠️
 - [x] Server roles finalised — esxi-02 ESXi, esxi-01 Proxmox, mgmt-01 SCCM/Windows
 - [x] Rack diagram created (docs/rack-diagram.html)
 - [x] Cisco 3850-48P-E ordered — 1055 SEK, renewtech.se (IP Services, 715W, rack mounts)
@@ -103,5 +105,3 @@ kanban-plugin: board
 %% kanban:settings
 ```
 {"kanban-plugin":"board","list-collapse":[false,false,false,false,false]}
-```
-%%
