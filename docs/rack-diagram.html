@@ -2,692 +2,91 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>theITchef — Rack Diagram</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<title>Rack Diagram — itc-uvy-rack-01</title>
 <style>
-  :root {
-    --bg: #0a0c0f;
-    --rack-bg: #111318;
-    --rack-border: #2a2d35;
-    --unit-line: #1e2128;
-    --text: #e2e8f0;
-    --text-dim: #64748b;
-    --text-muted: #334155;
-    --green: #22d3a0;
-    --blue: #38bdf8;
-    --orange: #fb923c;
-    --red: #f87171;
-    --yellow: #fbbf24;
-    --purple: #a78bfa;
-    --grey: #94a3b8;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
-  }
-
-  header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-
-  header h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--green);
-    letter-spacing: -0.02em;
-  }
-
-  header p {
-    color: var(--text-dim);
-    font-size: 0.75rem;
-    margin-top: 6px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-
-  .rack-container {
-    display: flex;
-    gap: 32px;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 900px;
-  }
-
-  .rack {
-    background: var(--rack-bg);
-    border: 2px solid var(--rack-border);
-    border-radius: 8px;
-    padding: 12px 0;
-    width: 520px;
-    flex-shrink: 0;
-    box-shadow: 0 0 60px rgba(34,211,160,0.05), 0 25px 50px rgba(0,0,0,0.5);
-    position: relative;
-  }
-
-  .rack::before {
-    content: 'HP 10642G2 — 42U';
-    position: absolute;
-    top: -28px;
-    left: 0;
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .rack-row {
-    display: flex;
-    align-items: stretch;
-    min-height: 24px;
-    border-bottom: 1px solid var(--unit-line);
-  }
-
-  .rack-row:last-child { border-bottom: none; }
-
-  .u-label {
-    width: 36px;
-    text-align: right;
-    padding-right: 8px;
-    font-size: 0.6rem;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-shrink: 0;
-  }
-
-  .unit {
-    flex: 1;
-    margin: 1px 8px 1px 0;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    position: relative;
-    min-height: 22px;
-  }
-
-  .unit.empty {
-    background: transparent;
-    border: 1px dashed var(--unit-line);
-  }
-
-  .unit.blank {
-    background: #13161c;
-    border: 1px solid #1a1d24;
-  }
-
-  .unit.patch-panel {
-    background: linear-gradient(135deg, #1e293b, #0f172a);
-    border: 1px solid #334155;
-    color: var(--blue);
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-    padding: 4px 10px;
-  }
-
-  .unit.cable-mgr {
-    background: #13161c;
-    border: 1px solid #1e2535;
-    color: var(--text-muted);
-    font-size: 0.55rem;
-    letter-spacing: 0.08em;
-  }
-
-  .unit.cisco-891 {
-    background: linear-gradient(135deg, #1c2535, #111827);
-    border: 1px solid #2d4a6e;
-    color: var(--blue);
-  }
-
-  .unit.cisco-3850 {
-    background: linear-gradient(135deg, #1c2535, #111827);
-    border: 1px solid #2d4a6e;
-    color: var(--blue);
-  }
-
-  .unit.cisco-3560 {
-    background: linear-gradient(135deg, #1c2535, #111827);
-    border: 1px solid #1e3a5f;
-    color: #7dd3fc;
-  }
-
-  .unit.shelf {
-    background: linear-gradient(135deg, #1a1f2e, #0f1218);
-    border: 1px solid #2a2d35;
-    color: var(--text-dim);
-    font-size: 0.6rem;
-  }
-
-  .unit.esxi {
-    background: linear-gradient(135deg, #1a2515, #0f1a0e);
-    border: 1px solid #2d4a20;
-    color: var(--green);
-  }
-
-  .unit.mgmt {
-    background: linear-gradient(135deg, #251a15, #1a0f0e);
-    border: 1px solid #4a2d20;
-    color: var(--orange);
-  }
-
-  .unit.dc01 {
-    background: linear-gradient(135deg, #1e1525, #130f1a);
-    border: 1px solid #3d2d5a;
-    color: var(--purple);
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 3px;
-    padding: 6px 10px;
-  }
-
-  .unit.future {
-    background: transparent;
-    border: 1px dashed #2d4a6e;
-    color: #334155;
-    font-style: italic;
-  }
-
-  .unit-name {
-    font-weight: 700;
-    font-size: 0.68rem;
-  }
-
-  .unit-detail {
-    font-size: 0.55rem;
-    color: var(--text-dim);
-    font-weight: 400;
-  }
-
-  .badge {
-    margin-left: auto;
-    font-size: 0.5rem;
-    padding: 2px 6px;
-    border-radius: 3px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 700;
-  }
-
-  .badge.done { background: rgba(34,211,160,0.15); color: var(--green); }
-  .badge.planned { background: rgba(56,189,248,0.1); color: #7dd3fc; }
-  .badge.future-badge { background: rgba(100,116,139,0.1); color: var(--text-muted); }
-  .badge.warn { background: rgba(251,146,60,0.15); color: var(--orange); }
-
-  .port-dots {
-    display: flex;
-    gap: 2px;
-    margin-left: 8px;
-    align-items: center;
-  }
-
-  .dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-  }
-
-  .dot.active { background: var(--green); box-shadow: 0 0 4px var(--green); }
-  .dot.inactive { background: #334155; }
-
-  /* Legend */
-  .legend {
-    flex: 1;
-    min-width: 220px;
-  }
-
-  .legend h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 16px;
-  }
-
-  .legend-section {
-    margin-bottom: 20px;
-  }
-
-  .legend-section h4 {
-    font-size: 0.6rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 8px;
-    border-bottom: 1px solid var(--unit-line);
-    padding-bottom: 4px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
-    font-size: 0.62rem;
-  }
-
-  .legend-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-
-  .cable-line {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 5px;
-    font-size: 0.6rem;
-  }
-
-  .cable-swatch {
-    width: 24px;
-    height: 4px;
-    border-radius: 2px;
-  }
-
-  .stats {
-    margin-top: 20px;
-    padding: 12px;
-    background: var(--rack-bg);
-    border: 1px solid var(--rack-border);
-    border-radius: 6px;
-  }
-
-  .stats h4 {
-    font-size: 0.6rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 10px;
-  }
-
-  .stat-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.62rem;
-    margin-bottom: 5px;
-    color: var(--text-dim);
-  }
-
-  .stat-val { color: var(--green); font-weight: 700; }
-
-  footer {
-    margin-top: 32px;
-    font-size: 0.6rem;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-  }
-
-  /* ── PRINT / A4 ── */
-  @media print {
-    @page {
-      size: A4 landscape;
-      margin: 10mm 12mm;
-    }
-
-    body {
-      background: #fff !important;
-      color: #000 !important;
-      padding: 0;
-      font-size: 7pt;
-    }
-
-    header h1 { color: #000 !important; font-size: 14pt; }
-    header p  { color: #555 !important; }
-
-    .rack-container {
-      gap: 16px;
-      width: 100%;
-      max-width: 100%;
-    }
-
-    .rack {
-      width: 360px;
-      box-shadow: none;
-      border: 1.5px solid #999;
-      background: #fff !important;
-    }
-
-    .rack::before { color: #555; }
-
-    .rack-row { min-height: 14px; border-bottom: 1px solid #e5e7eb; }
-
-    .u-label {
-      font-size: 6pt;
-      color: #999;
-      width: 24px;
-    }
-
-    .unit {
-      min-height: 13px;
-      font-size: 6.5pt;
-      border-radius: 2px;
-      padding: 0 6px;
-    }
-
-    .unit.blank  { background: #f9fafb !important; border-color: #e5e7eb !important; }
-    .unit.cable-mgr { background: #f3f4f6 !important; border-color: #d1d5db !important; color: #9ca3af !important; }
-
-    .unit.cisco-891,
-    .unit.cisco-3850,
-    .unit.cisco-3560 {
-      background: #eff6ff !important;
-      border-color: #93c5fd !important;
-      color: #1d4ed8 !important;
-    }
-
-    .unit.patch-panel {
-      background: #f0f9ff !important;
-      border-color: #7dd3fc !important;
-      color: #0369a1 !important;
-    }
-
-    .unit.esxi {
-      background: #f0fdf4 !important;
-      border-color: #86efac !important;
-      color: #15803d !important;
-    }
-
-    .unit.mgmt {
-      background: #fff7ed !important;
-      border-color: #fdba74 !important;
-      color: #c2410c !important;
-    }
-
-    .unit.dc01 {
-      background: #faf5ff !important;
-      border-color: #c4b5fd !important;
-      color: #6d28d9 !important;
-    }
-
-    .unit.shelf {
-      background: #f8fafc !important;
-      border-color: #cbd5e1 !important;
-      color: #475569 !important;
-    }
-
-    .unit.future {
-      background: #fff !important;
-      border-color: #cbd5e1 !important;
-      color: #94a3b8 !important;
-    }
-
-    .badge {
-      font-size: 5pt;
-      padding: 1px 4px;
-    }
-
-    .badge.done    { background: #dcfce7 !important; color: #166534 !important; }
-    .badge.planned { background: #dbeafe !important; color: #1e40af !important; }
-    .badge.warn    { background: #fef3c7 !important; color: #92400e !important; }
-    .badge.future-badge { background: #f1f5f9 !important; color: #64748b !important; }
-
-    .dot.active   { background: #16a34a !important; box-shadow: none !important; }
-    .dot.inactive { background: #d1d5db !important; }
-
-    .legend { min-width: 160px; }
-    .legend h3 { color: #374151 !important; }
-    .legend-section h4 { color: #6b7280 !important; border-color: #e5e7eb !important; }
-    .legend-item,
-    .cable-line { color: #374151 !important; font-size: 6.5pt; }
-
-    .cable-swatch { border: 1px solid #e5e7eb; }
-
-    .stats {
-      background: #f9fafb !important;
-      border-color: #e5e7eb !important;
-    }
-
-    .stats h4    { color: #6b7280 !important; }
-    .stat-row    { color: #374151 !important; }
-    .stat-val    { color: #15803d !important; }
-
-    footer { color: #9ca3af !important; margin-top: 12px; }
-
-    .separator { background: #e5e7eb !important; }
-  }
-
-  .separator {
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--rack-border), transparent);
-    margin: 4px 0;
-  }
+  body { font-family: monospace; background: #f5f5f3; margin: 20px; color: #1a1a1a; }
+  h1 { font-size: 16px; margin-bottom: 4px; }
+  p.sub { font-size: 11px; color: #666; margin: 0 0 16px; }
+  .rack { border: 2px solid #333; display: inline-block; width: 480px; background: #ddd; }
+  .u { display: flex; align-items: stretch; border-bottom: 1px solid #bbb; min-height: 28px; }
+  .u-num { width: 36px; font-size: 10px; color: #666; text-align: right; padding: 4px 6px; background: #ccc; flex-shrink: 0; display: flex; align-items: center; justify-content: flex-end; }
+  .u-content { flex: 1; padding: 3px 8px; font-size: 11px; display: flex; align-items: center; gap: 10px; }
+  .blank { background: #d0d0d0; color: #999; font-size: 10px; }
+  .device { background: #fff; border-left: 4px solid #888; }
+  .server  { border-left-color: #1D9E75; background: #f0faf6; }
+  .network { border-left-color: #378ADD; background: #f0f6ff; }
+  .mgmt    { border-left-color: #E8A020; background: #fffaf0; }
+  .shelf   { border-left-color: #888; background: #f8f8f8; }
+  .patch   { border-left-color: #D85A30; background: #fff5f0; }
+  .hostname { font-weight: bold; }
+  .role { color: #555; font-size: 10px; }
+  .legend { margin-top: 16px; font-size: 11px; }
+  .legend span { display: inline-block; width: 12px; height: 12px; margin-right: 4px; vertical-align: middle; }
 </style>
 </head>
 <body>
+<h1>itc-uvy-rack-01 — HP 10642G2 (42U)</h1>
+<p class="sub">U1 = bottom &nbsp;|&nbsp; Last updated: 2026-03-12</p>
 
-<header>
-  <h1>theITchef HomeLab</h1>
-  <p>Upplands Väsby · itc-uvy · Rack Diagram · Rev. 2026-03-10</p>
-</header>
+<div class="rack">
 
-<div class="rack-container">
-  <div class="rack">
+  <!-- U42–U35 blanking -->
+  <div class="u blank"><div class="u-num">U42</div><div class="u-content">blanking panels (U35–U42)</div></div>
 
-    <!-- U42–U34: Top blanking -->
-    <div class="rack-row"><div class="u-label">42</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">41</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">40</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">39</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">38</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">37</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">36</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">35</div><div class="unit blank"></div></div>
+  <!-- U34 patch panel -->
+  <div class="u device patch"><div class="u-num">U34</div><div class="u-content"><span class="hostname">24-port Keystone Patch Panel</span><span class="role">Phase 2</span></div></div>
 
-    <!-- U34: Patch Panel -->
-    <div class="rack-row">
-      <div class="u-label">34</div>
-      <div class="unit patch-panel">
-        <div class="unit-name">24-PORT KEYSTONE PATCH PANEL
-          <span class="badge planned">Planned</span>
-        </div>
-        <div class="unit-detail">Cat6 — structured cabling termination point</div>
-      </div>
-    </div>
+  <!-- U33 cable mgr -->
+  <div class="u device shelf"><div class="u-num">U33</div><div class="u-content"><span class="role">1U Cable Manager</span></div></div>
 
-    <!-- U33: Cable Manager -->
-    <div class="rack-row">
-      <div class="u-label">33</div>
-      <div class="unit cable-mgr">── 1U CABLE MANAGER ──<span class="badge future-badge">future</span></div>
-    </div>
+  <!-- U32 router -->
+  <div class="u device network"><div class="u-num">U32</div><div class="u-content"><span class="hostname">itc-uvy-rtr-01</span><span class="role">Cisco 891F — Edge router / WAN</span></div></div>
 
-    <!-- U32: Cisco 891F -->
-    <div class="rack-row">
-      <div class="u-label">32</div>
-      <div class="unit cisco-891">
-        <span class="unit-name">CISCO 891F ISR</span>
-        <div class="port-dots">
-          <div class="dot active"></div><div class="dot active"></div>
-          <div class="dot active"></div><div class="dot inactive"></div>
-          <div class="dot inactive"></div><div class="dot inactive"></div>
-          <div class="dot inactive"></div><div class="dot active"></div>
-        </div>
-        <span style="margin-left:6px;font-size:0.55rem;color:#7dd3fc;">GE8=WAN</span>
-        <span class="badge done">Live ✓</span>
-      </div>
-    </div>
+  <!-- U31 cable mgr -->
+  <div class="u device shelf"><div class="u-num">U31</div><div class="u-content"><span class="role">1U Cable Manager</span></div></div>
 
-    <!-- U31: Cable Manager -->
-    <div class="rack-row">
-      <div class="u-label">31</div>
-      <div class="unit cable-mgr">── 1U CABLE MANAGER ──<span class="badge future-badge">future</span></div>
-    </div>
+  <!-- U30 3850 -->
+  <div class="u device network"><div class="u-num">U30</div><div class="u-content"><span class="hostname">itc-uvy-sw-02</span><span class="role">Cisco 3850-48P-E — Core L3 (ordered)</span></div></div>
 
-    <!-- U30: Cisco 3850-48P -->
-    <div class="rack-row">
-      <div class="u-label">30</div>
-      <div class="unit cisco-3850">
-        <span class="unit-name">CISCO 3850-48P-E</span>
-        <span style="margin-left:6px;font-size:0.55rem;color:#7dd3fc;">48×PoE+ · IP Services · 715W</span>
-        <span class="badge warn">Ordered</span>
-      </div>
-    </div>
+  <!-- U29 3560 -->
+  <div class="u device network"><div class="u-num">U29</div><div class="u-content"><span class="hostname">itc-uvy-sw-01</span><span class="role">Cisco 3560-CG — OOB switch</span></div></div>
 
-    <!-- U29: Cisco 3560-CG -->
-    <div class="rack-row">
-      <div class="u-label">29</div>
-      <div class="unit cisco-3560">
-        <span class="unit-name">CISCO 3560-CG</span>
-        <span style="margin-left:6px;font-size:0.55rem;color:#7dd3fc;">OOB Management only</span>
-        <span class="badge done">Live ✓</span>
-      </div>
-    </div>
+  <!-- U28 shelf -->
+  <div class="u device shelf"><div class="u-num">U28</div><div class="u-content"><span class="role">1U Shelf — D-Link DGS-1100 + TP-Link 5-port</span></div></div>
 
-    <!-- U28: Shelf — D-Link + TP-Link -->
-    <div class="rack-row">
-      <div class="u-label">28</div>
-      <div class="unit shelf">
-        <span class="unit-name">1U SHELF</span>
-        <span style="margin-left:8px;font-size:0.58rem;">D-Link DGS-1100 OOB &nbsp;|&nbsp; TP-Link 5-port GbE</span>
-        <span class="badge planned">Planned</span>
-      </div>
-    </div>
+  <!-- U27 shelf kvm -->
+  <div class="u device shelf"><div class="u-num">U27</div><div class="u-content"><span class="role">1U Shelf — KVM (temporary)</span></div></div>
 
-    <!-- U27: KVM Shelf -->
-    <div class="rack-row">
-      <div class="u-label">27</div>
-      <div class="unit shelf">
-        <span class="unit-name">1U SHELF</span>
-        <span style="margin-left:8px;font-size:0.58rem;color:#475569;">KVM / Monitor (temporary build tool)</span>
-      </div>
-    </div>
+  <!-- U26–U19 blanking -->
+  <div class="u blank"><div class="u-num">U26</div><div class="u-content">blanking panels (U19–U26)</div></div>
 
-    <!-- U26-U19: Blanking -->
-    <div class="rack-row"><div class="u-label">26</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">25</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">24</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">23</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">22</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">21</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">20</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">19</div><div class="unit blank"></div></div>
+  <!-- U18 prx-01 -->
+  <div class="u device server"><div class="u-num">U18</div><div class="u-content"><span class="hostname">itc-uvy-prx-01</span><span class="role">Dell R620 · 96GB · Proxmox</span></div></div>
 
-    <div class="separator"></div>
+  <!-- U17 esxi-01 -->
+  <div class="u device server"><div class="u-num">U17</div><div class="u-content"><span class="hostname">itc-uvy-esxi-01</span><span class="role">Dell R620 · 304GB · ESXi 8</span></div></div>
 
-    <!-- U18: esxi-01 -->
-    <div class="rack-row">
-      <div class="u-label">18</div>
-      <div class="unit esxi">
-        <span class="unit-name">esxi-01 · DELL R620</span>
-        <span style="margin-left:6px;font-size:0.55rem;color:#4ade80;">2×E5-2670 · 128GB · iDRAC Ent</span>
-        <span class="badge warn">ESXi Pending</span>
-      </div>
-    </div>
+  <!-- U16–U13 blanking -->
+  <div class="u blank"><div class="u-num">U16</div><div class="u-content">blanking panels (U13–U16)</div></div>
 
-    <!-- U17: esxi-02 -->
-    <div class="rack-row">
-      <div class="u-label">17</div>
-      <div class="unit esxi">
-        <span class="unit-name">esxi-02 · DELL R620</span>
-        <span style="margin-left:6px;font-size:0.55rem;color:#4ade80;">2×E5-2660 · 272GB · iDRAC Ent</span>
-        <span class="badge done">ESXi 8 ✓</span>
-      </div>
-    </div>
+  <!-- U12 sccm-01 -->
+  <div class="u device server"><div class="u-num">U12</div><div class="u-content"><span class="hostname">itc-uvy-sccm-01</span><span class="role">HP DL360 Gen9 · 256GB · SCCM/mgmt</span></div></div>
 
-    <!-- U16-U13: Blanking -->
-    <div class="rack-row"><div class="u-label">16</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">15</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">14</div><div class="unit blank"></div></div>
-    <div class="rack-row"><div class="u-label">13</div><div class="unit blank"></div></div>
+  <!-- U11 blanking -->
+  <div class="u blank"><div class="u-num">U11</div><div class="u-content">blanking panel</div></div>
 
-    <!-- U12: mgmt-01 -->
-    <div class="rack-row">
-      <div class="u-label">12</div>
-      <div class="unit mgmt">
-        <span class="unit-name">mgmt-01 · HP DL360 Gen9</span>
-        <span style="margin-left:6px;font-size:0.55rem;color:#fdba74;">2×E5-2630v3 · 256GB · iLO4 Adv</span>
-        <span class="badge warn">WS2022 Exp</span>
-      </div>
-    </div>
+  <!-- U01–U10 dc-01 on shelf -->
+  <div class="u device mgmt"><div class="u-num">U01</div><div class="u-content"><span class="hostname">itc-uvy-dc-01</span><span class="role">Dell T330 on shelf · 8GB · AD/DNS (U01–U10)</span></div></div>
 
-    <!-- U11: Blanking -->
-    <div class="rack-row"><div class="u-label">11</div><div class="unit blank"></div></div>
-
-    <div class="separator"></div>
-
-    <!-- U10-U1: DC01 shelf -->
-    <div class="rack-row" style="min-height: 240px;">
-      <div class="u-label" style="align-self:flex-start;padding-top:6px;">10</div>
-      <div class="unit dc01" style="min-height:230px;">
-        <div class="unit-name">DC01 · DELL T330</div>
-        <div class="unit-detail">Tower on shelf · U1–U10</div>
-        <div style="margin-top:8px;font-size:0.6rem;color:#c4b5fd;">
-          ad.theitchef.com<br>
-          10.0.20.2 · VLAN 20<br>
-          WS2016 Essentials<br>
-          E3-1220v6 · 8GB · PERC H330
-        </div>
-        <span class="badge done" style="margin-top:auto;">DC Live ✓</span>
-      </div>
-    </div>
-    <div class="rack-row"><div class="u-label">1</div><div class="unit blank"></div></div>
-
-  </div>
-
-  <!-- Legend -->
-  <div class="legend">
-    <h3>Legend</h3>
-
-    <div class="legend-section">
-      <h4>Devices</h4>
-      <div class="legend-item"><div class="legend-dot" style="background:#2d4a6e;"></div>Cisco Networking</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#2d4a20;"></div>ESXi Hypervisor</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#4a2d20;"></div>Management Server</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#3d2d5a;"></div>Domain Controller</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#1e293b;"></div>Patch Panel / Shelf</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#13161c;"></div>Blanking Panel</div>
-    </div>
-
-    <div class="legend-section">
-      <h4>Cable Colours</h4>
-      <div class="cable-line"><div class="cable-swatch" style="background:#ef4444;"></div><span style="color:#94a3b8;">Red 10m — WAN uplink</span></div>
-      <div class="cable-line"><div class="cable-swatch" style="background:#22c55e;"></div><span style="color:#94a3b8;">Green 10m — T470s desk</span></div>
-      <div class="cable-line"><div class="cable-swatch" style="background:#334155;"></div><span style="color:#94a3b8;">Black 10m — Spare</span></div>
-      <div class="cable-line"><div class="cable-swatch" style="background:#94a3b8;"></div><span style="color:#94a3b8;">Panduit grey — Rack internal</span></div>
-      <div class="cable-line"><div class="cable-swatch" style="background:#f1f5f9;"></div><span style="color:#94a3b8;">White — Patch panel front</span></div>
-    </div>
-
-    <div class="legend-section">
-      <h4>Status</h4>
-      <div class="legend-item"><span class="badge done">Live ✓</span>&nbsp;Operational</div>
-      <div class="legend-item"><span class="badge warn">Ordered</span>&nbsp;Purchased, pending</div>
-      <div class="legend-item"><span class="badge planned">Planned</span>&nbsp;Confirmed, not bought</div>
-      <div class="legend-item"><span class="badge future-badge">Future</span>&nbsp;Phase 2+</div>
-    </div>
-
-    <div class="stats">
-      <h4>Cluster Stats</h4>
-      <div class="stat-row"><span>Total Cores</span><span class="stat-val">52c / 104t</span></div>
-      <div class="stat-row"><span>Total RAM</span><span class="stat-val">664 GB</span></div>
-      <div class="stat-row"><span>Storage</span><span class="stat-val">3.84TB SSD</span></div>
-      <div class="stat-row"><span>Switch Ports</span><span class="stat-val">48+8 PoE+</span></div>
-      <div class="stat-row"><span>PoE Budget</span><span class="stat-val">715W</span></div>
-      <div class="stat-row"><span>Rack Fill</span><span class="stat-val">~31%</span></div>
-    </div>
-  </div>
 </div>
 
-<footer>theITchef.com · github.com/TheITchef/homelab · Updated 2026-03-10</footer>
-
+<div class="legend">
+  <b>Legend:</b>&nbsp;
+  <span style="background:#1D9E75"></span>Server &nbsp;
+  <span style="background:#378ADD"></span>Network &nbsp;
+  <span style="background:#E8A020"></span>Management &nbsp;
+  <span style="background:#D85A30"></span>Patch/Cabling &nbsp;
+  <span style="background:#888"></span>Shelf/Mgr
+</div>
 </body>
 </html>

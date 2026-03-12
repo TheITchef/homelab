@@ -1,61 +1,10 @@
----
-tags: [shortcuts, git, ssh, cisco, ubuntu, network, reference, keepass, nano]
----
-
 # Scripts & Shortcuts — theITchef HomeLab
-**Last updated:** 2026-03-11  
-**Author:** Ioannis (theITchef)  
-> A living reference. Add to this every time you find a useful command or shortcut.
+**Last updated:** 2026-03-12
 
 ---
 
-## Git Workflow
+## SSH Shortcuts (T470s PAW — ~/.ssh/config)
 
-### Daily work — commit everything at once
-```bash
-cd ~/homelab
-git add .
-git commit -m "your message"
-git push
-```
-
-### Branch check before committing
-```bash
-git branch                    # check current branch
-git checkout dev              # switch to dev if on master
-```
-
-### End of milestone — merge dev to master
-```bash
-git checkout master
-git merge dev
-git push
-git checkout dev              # always go back to dev
-```
-
-### Untrack a file already in git
-```bash
-git rm --cached <filename>
-echo "<filename>" >> .gitignore
-git add .gitignore
-git commit -m "Untrack <filename>"
-```
-
----
-
-## SSH
-
-### SSH to 3560-CG (legacy IOS — requires flags)
-```bash
-ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -oHostKeyAlgorithms=+ssh-rsa -oCiphers=+aes256-cbc admin@10.0.10.11
-```
-
-### SSH to 3560-CG using config shortcut (after setup)
-```bash
-ssh 3560cg
-```
-
-### T470s SSH config (~/.ssh/config)
 ```
 Host 3560cg
     HostName 10.0.10.11
@@ -64,123 +13,103 @@ Host 3560cg
     HostKeyAlgorithms +ssh-rsa
     Ciphers +aes256-cbc
 
-Host 3850
-    HostName 10.0.10.12
-    User admin
+Host idrac-prx
+    HostName 10.0.10.3
+    User itchef-admin
 
-Host 891f
-    HostName 10.0.10.1
-    User admin
+Host idrac-esxi
+    HostName 10.0.10.4
+    User itchef-admin
+
+Host ilo-sccm
+    HostName 10.0.10.5
+    User itchef-admin
+```
+
+Usage: `ssh 3560cg` / `ssh idrac-prx` etc.
+
+---
+
+## Cable Colour Reference
+
+| Colour | Length | Use |
+|--------|--------|-----|
+| 🟣 Magenta | 0.25m | Server data NICs |
+| 🔵 Blue | 0.25m | iDRAC / iLO OOB |
+| 🔴 Red | 0.25m | vMotion |
+| 🟣 Violet | 0.25m | Storage |
+| ⬜ White | 0.5m | Patch panel → 3850 runs |
+| 🟢 Green | 0.5m | Uplinks / trunk ports |
+
+All 1aTTack.de Cat.6 from Amazon.se — ordered 2026-03-12.
+
+---
+
+## iDRAC XML Hardware Inventory Export
+
+Pull full hardware inventory via iDRAC REST API (no iDRAC Enterprise web UI needed for this):
+
+```bash
+curl -sku itchef-admin:PASSWORD \
+  https://10.0.10.4/redfish/v1/Managers/iDRAC.Embedded.1/Actions/Oem/DellManager.ExportSystemInventory \
+  -H "Content-Type: application/json" \
+  -d '{"ExportURI":"local"}' -o hardware.xml
+```
+
+Or from iDRAC web UI: **Overview → Server → Inventory → Export**.
+
+---
+
+## DIMM Population Check (Python — from XML export)
+
+```python
+import xml.etree.ElementTree as ET
+
+tree = ET.parse('HardwareInventory.xml')
+root = tree.getroot()
+
+for comp in root.iter('Component'):
+    if comp.get('Classname') == 'DCIM_MemoryView':
+        props = {p.get('NAME'): (p.find('VALUE').text if p.find('VALUE') is not None else None)
+                 for p in comp.iter('PROPERTY')}
+        print(f"{props.get('FQDD'):25} {int(props.get('Size',0))//1024}GB  {props.get('Speed')}MHz  {props.get('PartNumber')}")
 ```
 
 ---
 
-## Network — T470s
+## Useful Cisco IOS Commands
 
-### Check current IP
-```bash
-ip addr show enp0s31f6
 ```
+# Show all interfaces status
+show interfaces status
 
-### Add temporary static IP (for direct iDRAC access)
-```bash
-sudo ip addr add 192.168.0.100/24 dev enp0s31f6
-sudo ip addr add 10.0.10.100/24 dev enp0s31f6
-```
-
-### Remove temporary static IP
-```bash
-sudo ip addr del 192.168.0.100/24 dev enp0s31f6
-sudo ip addr del 10.0.10.100/24 dev enp0s31f6
-```
-
-### Flush and renew DHCP
-```bash
-sudo ip addr flush dev enp0s31f6
-sudo dhclient enp0s31f6
-```
-
-### Check DNS resolution
-```bash
-resolvectl status | grep DNS
-```
-
----
-
-## Ubuntu Maintenance
-
-### Update system
-```bash
-sudo apt update && sudo apt upgrade -y
-sudo apt autoremove -y
-```
-
-### Check open ports
-```bash
-ss -tulnp
-```
-
----
-
-## Cisco IOS — Useful Commands
-
-### Save config
-```
-wr
-```
-
-### Verify trunk
-```
+# Verify VLAN trunk
 show interfaces trunk
-```
 
-### Verify VLANs
-```
-show vlan brief
-```
+# Verify spanning tree
+show spanning-tree summary
 
-### Verify routing
-```
-show ip route
-show ip interface brief
-```
+# Show CDP neighbours
+show cdp neighbors detail
 
-### Verify SSH sessions
-```
-show users
-```
-
-### Safe debug (always filter!)
-```
-access-list 199 permit ip host <your-ip> any
-debug ip packet 199
-undebug all
+# Save config
+write memory
 ```
 
 ---
 
-## Nano
+## netplan DNS config (T470s PAW)
 
-### Save and exit
+`/etc/netplan/01-netcfg.yaml`:
+```yaml
+network:
+  version: 2
+  ethernets:
+    enp0s31f6:
+      dhcp4: true
+      nameservers:
+        addresses: [10.0.20.2, 8.8.8.8]
 ```
-Ctrl+X → Y → Enter
-```
+Apply: `sudo netplan apply`
 
-### Exit without saving
-```
-Ctrl+X → N
-```
-
----
-
-## KeePass
-
-### Password generation recommendation
-- Length: 32 characters
-- Include: uppercase, lowercase, numbers, symbols
-- One unique password per device — never reuse
-
----
-
-*Add new entries as you discover them.*  
-*github.com/TheITchef/homelab · docs/scripts-and-shortcuts.md*
+Verify: `resolvectl status` — should show 10.0.20.2 as primary DNS.
