@@ -2,7 +2,7 @@
 kanban-plugin: board
 ---
 
-**Last updated:** 2026-03-10 (late evening)
+**Last updated:** 2026-03-11
 
 ## 📥 Backlog
 
@@ -14,7 +14,7 @@ kanban-plugin: board
 - [ ] Prometheus + Grafana + Alertmanager (Phase 3 SRE)
 - [ ] SCCM / MECM eval deployment on mgmt-01 (Phase 3 Microsoft)
 - [ ] Configure D-Link DGS-1100-08V2 as OOB management switch (VLAN 10)
-- [ ] DC01 LAN2 → VLAN 10 (10.0.10.2), 3560-CG GE0/6
+- [x] DC01 LAN2 → VLAN 10 (10.0.10.2), 3560-CG GE0/6 ✅
 - [ ] Check H710 BBU health on esxi-02
 - [ ] Check P440ar cache/BBU on mgmt-01
 - [ ] Update ESXi 8.0.0 → 8.0 Update 3
@@ -73,6 +73,7 @@ kanban-plugin: board
 - [x] esxi-02 iDRAC hardened — 10.0.10.4, itc-uvy-idrac-esxi-02, itchef-admin, root disabled ✅
 - [x] mgmt-01 iLO4 hardened — 10.0.10.5, itc-uvy-ilo-mgmt-01, itchef-admin, Administrator secured ✅
 - [x] DC01 iDRAC Basic — 10.0.10.6, LAN2, no web UI (Basic licence), KVM only ⚠️
+- [x] T470s SSH config updated for legacy 3560-CG algorithms ✅
 - [x] Server roles finalised — esxi-02 ESXi, esxi-01 Proxmox, mgmt-01 SCCM/Windows
 - [x] Rack diagram created (docs/rack-diagram.html)
 - [x] Cisco 3850-48P-E ordered — 1055 SEK, renewtech.se (IP Services, 715W, rack mounts)
@@ -105,3 +106,5 @@ kanban-plugin: board
 %% kanban:settings
 ```
 {"kanban-plugin":"board","list-collapse":[false,false,false,false,false]}
+```
+%%
