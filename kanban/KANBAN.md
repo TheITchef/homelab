@@ -1,110 +1,99 @@
+# KANBAN — itc-uvy Homelab
+**Last updated:** 2026-03-31
+
 ---
-kanban-plugin: board
+
+## ✅ DONE
+
+- [x] Rack installed and positioned
+- [x] HP PDUs installed (zero-U, left side)
+- [x] C19→Schuko cables — PDUs connected to wall
+- [x] 19" shelves installed (2U each)
+- [x] Vertical cable channels identified (right=data, left=power)
+- [x] Cisco 891F configured — hostname, VLANs, SSH, hardened
+- [x] Cisco 3560-CG configured — hostname, VLANs, SSH, OOB ports
+- [x] Cisco 3850-48P-E received, configured — hostname, VLANs, SSH
+- [x] 3850 Fan 2 replaced ✅
+- [x] 3850 redundant PSU installed ✅
+- [x] Dell R620 rails received and installed (×2)
+- [x] esxi-01 racked at U14 ✅
+- [x] prx-01 racked at U13 ✅
+- [x] ms-01 (DL360) at U12 ✅
+- [x] dc-01 (T330) on shelf at U01 ✅
+- [x] Patch panel installed at U32 with 30× keystone couplers
+- [x] PP rear connections: Ports 01, 02, 03, 04, 13, 14, 15, 16, 17, 21, 22
+- [x] PP front connections: Ports 01, 02, 03, 04, 13, 14, 15, 16, 17, 21, 22
+- [x] 891F→3850 trunk up, all VLANs active
+- [x] 3850→3560 trunk up, native VLAN mismatch resolved
+- [x] PAW SSH config for all network devices
+- [x] ms-01 WS2025 Datacenter installed
+- [x] ms-01 renamed to itc-uvy-ms-01
+- [x] PAW connected via PP17 → 3560 GE5 → VLAN 10
+- [x] YubiKey 5C NFC FIDO2 PIN configured
+- [x] KeePassXC installed on PAW
+
 ---
 
-**Last updated:** 2026-03-11
+## 🔄 IN PROGRESS
 
-## 📥 Backlog
+- [ ] Hostname renames — all devices (runbook ready)
+  - [ ] DC01 → itc-uvy-dc-01 (netdom)
+  - [ ] esxi-02 → itc-uvy-esxi-01
+  - [ ] esxi-01 → itc-uvy-prx-01
+  - [ ] mgmt-01 → itc-uvy-ms-01 (done via fresh install)
+- [ ] dc-01 power up and DNS verification
+- [ ] ms-01 domain join to ad.theitchef.com
+- [ ] ms-01 Hyper-V role installation
+- [ ] YubiKey KeePassXC integration (TOTP)
+- [ ] esxi-01 and prx-01 iDRAC verification via PP
 
-- [ ] 🤔 FortiGate 60F — under consideration (SMB/mid-market DPI, ~€150 secondhand)
-- [ ] esxi-01 → Proxmox install (SRE/DevOps track)
-- [ ] mgmt-01 → Windows Server DC 2022 eval (180-day) — SCCM/SQL
-- [ ] esxi-02 → ESXi 8 update to U3, vCenter deployment
-- [ ] k3s cluster on Proxmox (Phase 3 SRE)
-- [ ] Prometheus + Grafana + Alertmanager (Phase 3 SRE)
-- [ ] SCCM / MECM eval deployment on mgmt-01 (Phase 3 Microsoft)
-- [ ] Configure D-Link DGS-1100-08V2 as OOB management switch (VLAN 10)
-- [x] DC01 LAN2 → VLAN 10 (10.0.10.2), 3560-CG GE0/6 ✅
-- [ ] Check H710 BBU health on esxi-02
-- [ ] Check P440ar cache/BBU on mgmt-01
-- [ ] Update ESXi 8.0.0 → 8.0 Update 3
-- [ ] Create draw.io / Excalidraw network topology diagram
-- [ ] Set up IPAM spreadsheet (IP address management)
-- [ ] Order: Cat6 patch cables (colour-coded per convention)
-- [ ] Order: 24-port Cat6 patch panel (1U)
-- [ ] Order: 2× 1U D-ring cable managers
-- [ ] Order: Blanking panels to fill empty Us
-- [ ] Order: Vertical PDU ×2 (IEC C13/C14, 16A, EU)
-- [ ] Order: Velcro cable ties
-- [ ] Order: Cable labels / label printer tape
-- [ ] Order: 1U shelf for D-Link OOB switch
-- [ ] Phase 2 cabling: 305m Cat6 solid core box, 24-port keystone patch panel, keystone jacks ×30, punch-down tool, 0.3m patch cables ×20
-- [ ] LinkedIn post #2 — Cisco network setup
-- [ ] Azure tenant — verify Sweden Central region
-- [ ] SCCM/MECM trial (Phase 3 prep)
+---
 
-## 🔨 In Progress — Phase 1 Physical
+## 📋 TODO — Phase 1
 
-- [ ] Wednesday: collect YubiKey 5C NFC (backup YubiKey 5 NFC — reorder later, not urgent)
-- [ ] YubiKey setup when collected
-- [x] Change all iDRAC/iLO default passwords ✅
-- [ ] Physical rack build — mount all devices per rack layout plan
-- [ ] Run and dress all power + data cables (architecture frozen — revisit Phase 2)
-- [ ] Label both ends of every cable
-- [ ] esxi-01 — install ESXi 8 (currently running Cisco CML)
-- [x] Temu ordered: blanking panels ×20 + cable managers ×2 ✅
-- [x] Amazon ordered: Digitus DN-93615 ×2 (48× Cat6A keystones + 2× patch panels) ✅
-- [ ] Order: 1U shelf ×1 (D-Link + TP-Link)
-- [ ] Order: patch cables — yellow ×4, blue ×6, orange ×4, purple ×4 (0.3m) + red ×2, white ×14 (0.5m) + spare ×5
-- [ ] Order: velcro cable ties ×1 pack
-- [ ] Order: cable labels / markers ×1 pack
+- [ ] D-Link DGS-1100 config — assign 10.0.10.10, VLAN 10
+- [ ] ms-01 BBU check via iLO (P440ar)
+- [ ] ms-01 DIMM slot 12 reseat/replace
+- [ ] prx-01 — wipe Cisco CML, install Proxmox
+- [ ] esxi-01 NIC2 mgmt → PP05 → 3850 Gi1/0/7
+- [ ] KeePass backup to Google Drive
+- [ ] Order permanent rear cables (Green 5m ×4, Blue 5m ×5)
+- [ ] Replace Panduit temporary runs with permanent coloured cables
+- [ ] DNS records for all devices on dc-01
+- [ ] Save all Cisco configs to GitHub configs/cisco/
+- [ ] Update port-mapping.pdf
+- [ ] 3850 config backup to GitHub
 
-## ✅ Done
+---
 
-- [x] Equipment inventory photographed and documented
-- [x] Rack model confirmed: HP 10642G2 (42U)
-- [x] GitHub repo created: github.com/TheITchef/homelab
-- [x] Project Kanban created (Obsidian)
-- [x] DC01 promoted to Domain Controller (ad.theitchef.com)
-- [x] AD OU structure created (_THEITCHEF hierarchy)
-- [x] AD user accounts: ioannis, itchef.admin (break-glass), 6× svc.* accounts
-- [x] MotoGP grid users created in People OU (17 users, valentino.rossi = VIP 👑)
-- [x] Password policies: Default Domain + ServiceAccounts-PSO
-- [x] Audit policy enabled (all categories, 1GB security log)
-- [x] KeePass database created (theitchef-lab.kdbx)
-- [x] Cisco 891F — full config (VLANs, NAT, ACLs, SSH, NTP, DHCP)
-- [x] Cisco 3560-CG — full config (VLANs, trunking, SSH, NTP, port assignments)
-- [x] 891F ↔ 3560-CG trunk: up/up, all VLANs, native VLAN 999
-- [x] Internet connectivity confirmed through lab (NAT overload)
-- [x] DC01 migrated from home LAN (192.168.0.50) → lab VLAN 20 (10.0.20.2)
-- [x] T470s PAW connected to lab: GbE → 3560-CG GE0/5 (VLAN 20)
-- [x] RDP from T470s → DC01 working
-- [x] esxi-01 iDRAC hardened — 10.0.10.3, itc-uvy-idrac-esxi-01, itchef-admin, root disabled ✅
-- [x] esxi-02 iDRAC hardened — 10.0.10.4, itc-uvy-idrac-esxi-02, itchef-admin, root disabled ✅
-- [x] mgmt-01 iLO4 hardened — 10.0.10.5, itc-uvy-ilo-mgmt-01, itchef-admin, Administrator secured ✅
-- [x] DC01 iDRAC Basic — 10.0.10.6, LAN2, no web UI (Basic licence), KVM only ⚠️
-- [x] T470s SSH config updated for legacy 3560-CG algorithms ✅
-- [x] Server roles finalised — esxi-02 ESXi, esxi-01 Proxmox, mgmt-01 SCCM/Windows
-- [x] Rack diagram created (docs/rack-diagram.html)
-- [x] Cisco 3850-48P-E ordered — 1055 SEK, renewtech.se (IP Services, 715W, rack mounts)
-- [x] Cabling architecture planned — Panduit grey internal, 10m external ×3
-- [x] Patch panel / keystone architecture frozen until Phase 2
-- [x] Firewall research completed — FortiGate 60F under consideration
-- [x] Running configs saved to GitHub (configs/cisco/)
-- [x] LinkedIn profile set up (TheITchef)
-- [x] LinkedIn post #1 published (lab intro)
+## 🔔 PARKED / FUTURE
 
-## 🧪 Testing & Validation
+- [ ] TrueNAS VM on esxi-01 — NFS over VLAN 40 (needs 2 more SAS caddies)
+- [ ] H310 flash to IT mode on prx-01 (LSI 9211-8i compatible)
+- [ ] SAS drives RAID 5 on esxi-01 H710 (needs 2 more caddies)
+- [ ] dc-01 virtualisation → Phase 2 (frees U01–U11)
+- [ ] Hyper-V VMs on ms-01: sccm-01, wsus-01, ca-01, mgmt-01
+- [ ] Azure hybrid cloud integration
+- [ ] Optical lines + 10GbE east-west — Phase 3
+- [ ] C3850-NM-2-10G module + R620 mezz NICs — Phase 3
+- [ ] Second patch panel at U35 — next wave
+- [ ] Rack rails R620 ×2 — ✅ installed
+- [ ] HP ROK WS2025 Datacenter key for ms-01
 
-- [ ] Access all iDRAC/iLO interfaces from VLAN 10
-- [ ] Confirm inter-VLAN routing (ping across all VLANs from mgmt host)
-- [ ] Confirm WAN failover / ACL behaviour
-- [ ] Check airflow — no hot spots, all blanking panels in place
-- [ ] Document final cable runs
+---
 
-## 🚀 Phase 2 — Virtualization (Future)
+## 📦 PENDING DELIVERIES
 
-- [ ] ESXi 8.x install on esxi-01 (currently CML — reinstall)
-- [ ] ESXi 8.x already on esxi-02 — update to 8.0 U3
-- [ ] Deploy vCenter Server Appliance (VCSA)
-- [ ] Form vSphere cluster (esxi-01, esxi-02)
-- [ ] Configure vDS (vSphere Distributed Switch)
-- [ ] Configure shared storage
-- [ ] Deploy monitoring stack (Grafana/Prometheus or similar)
-- [ ] LinkedIn post #3 — vSphere cluster live
+- [ ] Green Cat6 5m ×4 (server data permanent)
+- [ ] Blue Cat6 5m ×5 (server OOB permanent)
 
-%% kanban:settings
-```
-{"kanban-plugin":"board","list-collapse":[false,false,false,false,false]}
-```
-%%
+---
+
+## 📊 PROGRESS
+
+| Phase | Progress |
+|-------|---------|
+| Phase 1 — Physical infrastructure | ~75% |
+| Phase 1 — Network config | ~60% |
+| Phase 1 — Server config | ~30% |
+| Overall | ~45% |
