@@ -118,3 +118,6 @@ Code
 6. Remove L3 config from 3560CG.
 
 ---
+Host	Model	Switch Port	VLAN	IP	Status
+itc-uvy-idrac-prx-01	Dell R620 (Proxmox)	Gi0/3	10 (MGMT)	10.0.10.3	Reachable from PAW
+itc-uvy-idrac-esxi-01	Dell R620 (ESXi)	Gi0/2	10 (MGMT)	10.0.10.4	Reachable from PAW
